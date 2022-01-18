@@ -1,0 +1,25 @@
+{
+  "name": "meroxa-js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Brett Goulder <brett@meroxa.io>",
+  "contributors": [
+    "Brett Goulder <brett@meroxa.io>",
+    "James Martinez <james@meroxa.io>"
+  ],
+  "license": "ISC",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.9.1",
+    "@typescript-eslint/parser": "^5.9.1",
+    "eslint": "^8.7.0",
+    "prettier": "^2.5.1",
+    "typescript": "^4.5.4"
+  },
+  "dependencies": {
+    "axios": "^0.24.0"
+  }
+}
