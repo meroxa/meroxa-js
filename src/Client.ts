@@ -32,20 +32,35 @@ export default class Client {
   }
 
   public readonly connectors = {
+    /**
+     * Returns a given connector.
+     * @param nameOrID
+     */
     get: async (nameOrID: string): Promise<ConnectorResponse[]> => {
       let response = await this.#client.get(`/connectors/${nameOrID}`);
       return response.data;
     },
 
+    /**
+     * Returns a list of all connectors.
+     */
     list: async (): Promise<ConnectorResponse[]> => {
       let response = await this.#client.get(`/connectors`);
       return response.data;
     },
 
+    /**
+     * Deletes a connector by name or ID.
+     * @param nameOrID
+     */
     delete: async (nameOrID: string): Promise<void> => {
       await this.#client.delete(`/connectors/${nameOrID}`);
     },
 
+    /**
+     * Creates a new connector.
+     * @param {}
+     */
     create: async (
       params: CreateConnectorParams
     ): Promise<ConnectorResponse> => {
@@ -63,11 +78,18 @@ export default class Client {
   };
 
   public readonly functions = {
+    /**
+     * Returns a given function.
+     * @param nameOrID function name or ID
+     */
     get: async (nameOrID: string): Promise<FunctionResponse[]> => {
       let response = await this.#client.get(`/functions/${nameOrID}`);
       return response.data;
     },
 
+    /**
+     * Returns a list of all functions.
+     */
     list: async (): Promise<FunctionResponse[]> => {
       let response = await this.#client.get(`/functions`);
       return response.data;
@@ -150,6 +172,9 @@ export default class Client {
   };
 
   public readonly users = {
+    /**
+     * Returns your user profile.
+     */
     me: async (): Promise<UserResponse> => {
       let response = await this.#client.get("/users/me");
       return response.data;
