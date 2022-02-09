@@ -17,6 +17,7 @@ import {
 export interface ClientOptions {
   auth: string;
   timeoutMs?: number;
+  url?: string;
 }
 
 export default class Client {
@@ -24,8 +25,9 @@ export default class Client {
   #apiVersion = "v1";
 
   constructor(options: ClientOptions) {
+    const url = options.url || "https://api.meroxa.io";
     this.#client = axios.create({
-      baseURL: `https://api.meroxa.io/${this.#apiVersion}`,
+      baseURL: `${url}/${this.#apiVersion}`,
       timeout: options?.timeoutMs ?? 10_000,
       headers: { Authorization: `Bearer ${options.auth}` },
     });

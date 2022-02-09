@@ -2,6 +2,7 @@ import { CreateResourceParams, UpdateResourceParams, ResourceResponse, CreateCon
 export interface ClientOptions {
     auth: string;
     timeoutMs?: number;
+    url?: string;
 }
 export default class Client {
     #private;
