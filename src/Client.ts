@@ -22,12 +22,11 @@ export interface ClientOptions {
 
 export default class Client {
   #client: AxiosInstance;
-  #apiVersion = "v1";
 
   constructor(options: ClientOptions) {
-    const url = options.url || "https://api.meroxa.io";
+    const url = options.url || "https://api.meroxa.io/v1";
     this.#client = axios.create({
-      baseURL: `${url}/${this.#apiVersion}`,
+      baseURL: url,
       timeout: options?.timeoutMs ?? 10_000,
       headers: { Authorization: `Bearer ${options.auth}` },
     });
