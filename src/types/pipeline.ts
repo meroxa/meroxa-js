@@ -4,6 +4,11 @@ export interface PipelineIdentifier {
   name: string;
 }
 
+export interface PipelineMetadata {
+  turbine: boolean;
+  app: string | undefined;
+}
+
 export interface PipelineResponse {
   created_at: Date;
   environment?: EnvironmentIdentifier;
@@ -18,11 +23,11 @@ export interface PipelineResponse {
 export interface CreatePipelineParams {
   name: string;
   environment?: EnvironmentIdentifier;
-  metadata?: string[];
+  metadata?: PipelineMetadata;
 }
 
 export interface UpdatePipelineParams {
   name: string;
   environment?: EnvironmentIdentifier;
-  metadata?: string[];
+  metadata?: PipelineMetadata;
 }
