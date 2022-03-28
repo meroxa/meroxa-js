@@ -13,6 +13,8 @@ import {
   CreatePipelineParams,
   UpdatePipelineParams,
 } from "./types";
+import { BuildResponse, CreateBuildParams } from "./types/build";
+import { SourceResponse } from "./types/source";
 
 export interface ClientOptions {
   auth: string;
@@ -32,12 +34,24 @@ export default class Client {
     });
   }
 
+  public readonly builds = {
+    create: async (params: CreateBuildParams): Promise<BuildResponse> => {
+      let response = await this.#client.post("/builds", params);
+      return response.data;
+    },
+
+    get: async (uuid: string): Promise<BuildResponse> => {
+      let response = await this.#client.get(`/builds/${uuid}`);
+      return response.data;
+    },
+  };
+
   public readonly connectors = {
     /**
      * Returns a given connector.
      * @param nameOrID
      */
-    get: async (nameOrID: string): Promise<ConnectorResponse[]> => {
+    get: async (nameOrID: string): Promise<ConnectorResponse> => {
       let response = await this.#client.get(`/connectors/${nameOrID}`);
       return response.data;
     },
@@ -93,7 +107,7 @@ export default class Client {
      * Returns a given function.
      * @param {string} nameOrID - The name or ID of the function.
      */
-    get: async (nameOrID: string): Promise<FunctionResponse[]> => {
+    get: async (nameOrID: string): Promise<FunctionResponse> => {
       let response = await this.#client.get(`/functions/${nameOrID}`);
       return response.data;
     },
@@ -260,6 +274,13 @@ export default class Client {
         `/resources/${params.name}`,
         params
       );
+      return response.data;
+    },
+  };
+
+  public readonly sources = {
+    create: async (): Promise<SourceResponse> => {
+      let response = await this.#client.post("/sources");
       return response.data;
     },
   };

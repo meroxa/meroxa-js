@@ -1,4 +1,6 @@
 import { CreateResourceParams, UpdateResourceParams, ResourceResponse, CreateConnectorParams, UpdateConnectorParams, ConnectorResponse, CreateFunctionParams, FunctionResponse, UserResponse, PipelineResponse, CreatePipelineParams, UpdatePipelineParams } from "./types";
+import { BuildResponse, CreateBuildParams } from "./types/build";
+import { SourceResponse } from "./types/source";
 export interface ClientOptions {
     auth: string;
     timeoutMs?: number;
@@ -7,12 +9,16 @@ export interface ClientOptions {
 export default class Client {
     #private;
     constructor(options: ClientOptions);
+    readonly builds: {
+        create: (params: CreateBuildParams) => Promise<BuildResponse>;
+        get: (uuid: string) => Promise<BuildResponse>;
+    };
     readonly connectors: {
         /**
          * Returns a given connector.
          * @param nameOrID
          */
-        get: (nameOrID: string) => Promise<ConnectorResponse[]>;
+        get: (nameOrID: string) => Promise<ConnectorResponse>;
         /**
          * Returns a list of all connectors.
          */
@@ -44,7 +50,7 @@ export default class Client {
          * Returns a given function.
          * @param {string} nameOrID - The name or ID of the function.
          */
-        get: (nameOrID: string) => Promise<FunctionResponse[]>;
+        get: (nameOrID: string) => Promise<FunctionResponse>;
         /**
          * Returns a list of all functions.
          */
@@ -141,6 +147,9 @@ export default class Client {
          * @param {Object} [params.ssh_tunnel] - SSH Tunnel credentials for a resource.
          */
         update: (params: UpdateResourceParams) => Promise<ResourceResponse>;
+    };
+    readonly sources: {
+        create: () => Promise<SourceResponse>;
     };
     readonly users: {
         /**
