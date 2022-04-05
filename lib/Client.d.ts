@@ -28,6 +28,7 @@ export default class Client {
          * @param {string} nameOrID - The name or ID of the connector to delete.
          */
         delete: (nameOrID: string) => Promise<void>;
+        listByPipeline: (pipelineNameOrID: string) => Promise<ConnectorResponse[]>;
         /**
          * Creates a new connector.
          * @param {Object} params

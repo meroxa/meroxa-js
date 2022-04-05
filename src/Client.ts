@@ -72,6 +72,15 @@ export default class Client {
       await this.#client.delete(`/connectors/${nameOrID}`);
     },
 
+    listByPipeline: async (
+      pipelineNameOrID: string
+    ): Promise<ConnectorResponse[]> => {
+      let response = await this.#client.get(
+        `/pipelines/${pipelineNameOrID}/connectors`
+      );
+      return response.data;
+    },
+
     /**
      * Creates a new connector.
      * @param {Object} params
