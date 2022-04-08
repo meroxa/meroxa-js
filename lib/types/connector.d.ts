@@ -16,7 +16,7 @@ export interface ConnectorMetadata {
 export interface CreateConnectorParams {
     config: ConnectorConfig;
     metadata: ConnectorMetadata;
-    name: string;
+    name?: string;
     resource_id: number;
     pipeline_id: number | null;
     pipeline_name?: string;
