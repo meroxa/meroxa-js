@@ -8,7 +8,7 @@ export type ResourceType =
   | "s3"
   | "mongodb"
   | "elasticsearch"
-  | "snowflake"
+  | "snowflakedb"
   | "bigquey"
   | "sqlserver"
   | "cosmosdb";
