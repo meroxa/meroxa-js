@@ -1,5 +1,5 @@
 {
-  "name": "meroxa-js",
+  "name": "@meroxa/meroxa-js",
   "version": "1.0.0",
   "description": "Meroxa Platform API JS client",
   "main": "lib/index.js",
