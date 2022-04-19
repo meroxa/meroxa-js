@@ -1,5 +1,5 @@
 import { EnvironmentIdentifier } from "./environment";
-export declare type ResourceType = "postgres" | "mysql" | "redshift" | "url" | "s3" | "mongodb" | "elasticsearch" | "snowflake" | "bigquey" | "sqlserver" | "cosmosdb";
+export declare type ResourceType = "postgres" | "mysql" | "redshift" | "url" | "s3" | "mongodb" | "elasticsearch" | "snowflakedb" | "bigquey" | "sqlserver" | "cosmosdb";
 export interface ResourceCredentials {
     username: string;
     password: string;
