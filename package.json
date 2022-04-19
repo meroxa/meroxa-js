@@ -1,8 +1,9 @@
 {
   "name": "meroxa-js",
   "version": "1.0.0",
-  "description": "",
+  "description": "Meroxa Platform API JS client",
   "main": "lib/index.js",
+  "files": ["lib/**/*"],
   "scripts": {
     "build": "npx tsc",
     "build:watch": "npx tsc -w",
