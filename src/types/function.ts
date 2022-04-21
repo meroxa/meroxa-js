@@ -14,8 +14,8 @@ export interface FunctionStatus {
 export interface CreateFunctionParams {
   input_stream: string;
   image: string;
-  command: string[];
-  args: string[];
+  command?: string[];
+  args?: string[];
   pipeline: PipelineIdentifier;
   env_vars: FunctionEnvVars;
 }
