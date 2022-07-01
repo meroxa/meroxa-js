@@ -1,4 +1,4 @@
-import { CreateResourceParams, UpdateResourceParams, ResourceResponse, CreateConnectorParams, UpdateConnectorParams, ConnectorResponse, CreateFunctionParams, FunctionResponse, UserResponse, PipelineResponse, CreatePipelineParams, UpdatePipelineParams } from "./types";
+import { CreateResourceParams, UpdateResourceParams, ResourceResponse, CreateConnectorParams, UpdateConnectorParams, ConnectorResponse, CreateFunctionParams, FunctionResponse, UserResponse, PipelineResponse, CreatePipelineParams, UpdatePipelineParams, CreateApplicationParams, ApplicationResponse } from "./types";
 import { BuildResponse, CreateBuildParams } from "./types/build";
 import { SourceResponse } from "./types/source";
 export interface ClientOptions {
@@ -12,6 +12,17 @@ export default class Client {
     readonly builds: {
         create: (params: CreateBuildParams) => Promise<BuildResponse>;
         get: (uuid: string) => Promise<BuildResponse>;
+    };
+    readonly applications: {
+        /**
+         * Creates a new application.
+         * @param {Object} params
+         * @param {string} params.name - The name of the application.
+         * @param {string} params.language - The language of the application.
+         * @param {number} params.git_sha - The current sha of the data application .
+         * @param {string} params.pipeline - The pipeline identifier for the application to run inside.
+         */
+        create: (params: CreateApplicationParams) => Promise<ApplicationResponse>;
     };
     readonly connectors: {
         /**

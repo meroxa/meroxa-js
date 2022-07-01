@@ -1,4 +1,7 @@
 import { PipelineIdentifier } from "./pipeline";
+export interface FunctionIdentifier {
+    name: string;
+}
 export interface FunctionEnvVars {
     [index: string]: string;
 }
