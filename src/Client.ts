@@ -12,6 +12,8 @@ import {
   PipelineResponse,
   CreatePipelineParams,
   UpdatePipelineParams,
+  CreateApplicationParams,
+  ApplicationResponse
 } from "./types";
 import { BuildResponse, CreateBuildParams } from "./types/build";
 import { SourceResponse } from "./types/source";
@@ -45,6 +47,25 @@ export default class Client {
       return response.data;
     },
   };
+
+
+  public readonly applications = {
+    /**
+     * Creates a new application.
+     * @param {Object} params
+     * @param {string} params.name - The name of the application.
+     * @param {string} params.language - The language of the application.
+     * @param {number} params.git_sha - The current sha of the data application .
+     * @param {string} params.pipeline - The pipeline identifier for the application to run inside.
+     */
+    create: async (
+      params: CreateApplicationParams
+    ): Promise<ApplicationResponse> => {
+      let response = await this.#client.post(`/applications`, params);
+      return response.data;
+    },
+  };
+
 
   public readonly connectors = {
     /**

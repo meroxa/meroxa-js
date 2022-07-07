@@ -9,6 +9,10 @@ export type ConnectorState =
   | "failed"
   | "doa";
 
+export interface ConnectorIdentifier {
+  name: string;
+}
+
 export interface ConnectorConfig {
   [index: string]: string;
   input: string;

@@ -1,6 +1,9 @@
 import { EnvironmentIdentifier } from "./environment";
 export declare type ConnectorType = "source" | "destination";
 export declare type ConnectorState = "pending" | "running" | "paused" | "crashed" | "failed" | "doa";
+export interface ConnectorIdentifier {
+    name: string;
+}
 export interface ConnectorConfig {
     [index: string]: string;
     input: string;

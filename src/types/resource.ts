@@ -13,6 +13,10 @@ export type ResourceType =
   | "sqlserver"
   | "cosmosdb";
 
+export interface ResourceIdentifier {
+  name: string;
+}
+
 export interface ResourceCredentials {
   username: string;
   password: string;
