@@ -16,6 +16,7 @@ export interface FunctionStatus {
 }
 
 export interface CreateFunctionParams {
+  name: string;
   input_stream: string;
   image: string;
   command?: string[];
