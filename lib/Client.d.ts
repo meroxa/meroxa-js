@@ -75,6 +75,7 @@ export default class Client {
         /**
          * Creates a new function.
          * @param {Object} params - The parameters of the function.
+         * @param {string} params.name - The name of the function
          * @param {string} params.input_stream - The name of the input stream.
          * @param {string} params.image - The name of the image.
          * @param {string[]} params.args - The arguments of the function.
