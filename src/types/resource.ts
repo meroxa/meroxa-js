@@ -15,6 +15,14 @@ export type ResourceType =
 
 export interface ResourceIdentifier {
   name: string;
+  uuid: string;
+  collection: ResourceCollection
+}
+
+export interface ResourceCollection{
+  source: boolean;
+  destination: boolean;
+  name: string;
 }
 
 export interface ResourceCredentials {
