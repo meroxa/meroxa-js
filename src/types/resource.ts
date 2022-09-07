@@ -11,15 +11,16 @@ export type ResourceType =
   | "snowflakedb"
   | "bigquey"
   | "sqlserver"
-  | "cosmosdb";
+  | "cosmosdb"
+  | "kafka";
 
 export interface ResourceIdentifier {
   name: string;
   uuid: string;
-  collection: ResourceCollection
+  collection: ResourceCollection;
 }
 
-export interface ResourceCollection{
+export interface ResourceCollection {
   source: boolean;
   destination: boolean;
   name: string;
