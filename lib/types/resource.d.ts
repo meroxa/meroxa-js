@@ -1,6 +1,13 @@
 import { EnvironmentIdentifier } from "./environment";
-export declare type ResourceType = "postgres" | "mysql" | "redshift" | "url" | "s3" | "mongodb" | "elasticsearch" | "snowflakedb" | "bigquey" | "sqlserver" | "cosmosdb";
+export declare type ResourceType = "postgres" | "mysql" | "redshift" | "url" | "s3" | "mongodb" | "elasticsearch" | "snowflakedb" | "bigquery" | "sqlserver" | "cosmosdb" | "kafka" | "confluentcloud";
 export interface ResourceIdentifier {
+    name: string;
+    uuid: string;
+    collection: ResourceCollection;
+}
+export interface ResourceCollection {
+    source: boolean;
+    destination: boolean;
     name: string;
 }
 export interface ResourceCredentials {
