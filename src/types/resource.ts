@@ -9,7 +9,7 @@ export type ResourceType =
   | "mongodb"
   | "elasticsearch"
   | "snowflakedb"
-  | "bigquey"
+  | "bigquery"
   | "sqlserver"
   | "cosmosdb"
   | "kafka"
