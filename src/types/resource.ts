@@ -12,7 +12,8 @@ export type ResourceType =
   | "bigquey"
   | "sqlserver"
   | "cosmosdb"
-  | "kafka";
+  | "kafka"
+  | "confluentcloud";
 
 export interface ResourceIdentifier {
   name: string;
