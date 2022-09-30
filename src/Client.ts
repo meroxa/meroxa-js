@@ -13,7 +13,7 @@ import {
   CreatePipelineParams,
   UpdatePipelineParams,
   CreateApplicationParams,
-  ApplicationResponse
+  ApplicationResponse,
 } from "./types";
 import { BuildResponse, CreateBuildParams } from "./types/build";
 import { SourceResponse } from "./types/source";
@@ -22,15 +22,17 @@ export interface ClientOptions {
   auth: string;
   timeoutMs?: number;
   url?: string;
+  apiVersion?: string;
 }
 
 export default class Client {
   #client: AxiosInstance;
 
   constructor(options: ClientOptions) {
-    const url = options.url || "https://api.meroxa.io/v1";
+    const version = options.apiVersion || "v1";
+    const apiURL = options.url || "https://api.meroxa.io";
     this.#client = axios.create({
-      baseURL: url,
+      baseURL: `${apiURL}/${version}`,
       timeout: options?.timeoutMs ?? 10_000,
       headers: { Authorization: `Bearer ${options.auth}` },
     });
@@ -48,7 +50,6 @@ export default class Client {
     },
   };
 
-
   public readonly applications = {
     /**
      * Creates a new application.
@@ -65,7 +66,6 @@ export default class Client {
       return response.data;
     },
   };
-
 
   public readonly connectors = {
     /**
@@ -161,7 +161,7 @@ export default class Client {
     /**
      * Creates a new function.
      * @param {Object} params - The parameters of the function.
-     * @param {string} params.name - The name of the function 
+     * @param {string} params.name - The name of the function
      * @param {string} params.input_stream - The name of the input stream.
      * @param {string} params.image - The name of the image.
      * @param {string[]} params.args - The arguments of the function.
