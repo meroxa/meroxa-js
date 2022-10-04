@@ -6,8 +6,11 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "rootDir": "./src",
     "outDir": "./lib",
-    "declaration": true
+    "declaration": true,
+    "allowJs": true,
+    "sourceMap": true
   },
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Recommended",

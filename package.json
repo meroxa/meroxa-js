@@ -3,11 +3,16 @@
   "version": "1.4.0",
   "description": "Meroxa Platform API JS client",
   "main": "lib/index.js",
-  "files": ["lib/**/*"],
+  "files": [
+    "lib/**/*"
+  ],
   "scripts": {
-    "build": "npx tsc",
-    "build:watch": "npx tsc -w",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean-build": "rm -rf lib",
+    "build:dev": "npm run clean-build && tsc",
+    "build:prod": "npm run clean-build && tsc --sourceMap false",
+    "build:watch": "tsc -w",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "release": "npm run build:prod && changeset publish"
   },
   "author": "Brett Goulder <brett@meroxa.io>",
   "contributors": [
@@ -23,6 +28,7 @@
     "typescript": "^4.5.4"
   },
   "dependencies": {
+    "@changesets/cli": "^2.24.4",
     "axios": "^0.24.0"
   }
 }
