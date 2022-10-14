@@ -1,5 +1,11 @@
 # @meroxa/meroxa-js
 
+## 1.6.0
+
+### Minor Changes
+
+- a7ab788: feat(accounts): allow meroxa-js to make account-specific requests to the platform API
+
 ## 1.5.0
 
 ### Minor Changes
