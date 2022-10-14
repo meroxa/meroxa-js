@@ -1,5 +1,11 @@
 # @meroxa/meroxa-js
 
+## 1.6.1
+
+### Patch Changes
+
+- 38c1d67: fix(client): use correct type for account-uuid request header
+
 ## 1.6.0
 
 ### Minor Changes
