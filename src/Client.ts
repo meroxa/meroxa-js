@@ -31,10 +31,16 @@ export default class Client {
   constructor(options: ClientOptions) {
     const version = options.apiVersion || "v1";
     const apiURL = options.url || "https://api.meroxa.io";
+    const headers = { Authorization: `Bearer ${options.auth}` };
+
+    if (options.accountUUID) {
+      headers['Meroxa-Account-UUID'] = options.accountUUID;
+    }
+
     this.#client = axios.create({
       baseURL: `${apiURL}/${version}`,
       timeout: options?.timeoutMs ?? 10_000,
-      headers: { Authorization: `Bearer ${options.auth}` },
+      headers,
     });
   }
 
