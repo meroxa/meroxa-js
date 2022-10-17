@@ -1,5 +1,11 @@
 # @meroxa/meroxa-js
 
+## 1.7.0
+
+### Minor Changes
+
+- cb362fb: fix(v2): Add function and types for v2 app create
+
 ## 1.6.1
 
 ### Patch Changes
