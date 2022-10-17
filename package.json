@@ -12,7 +12,8 @@
     "build:prod": "npm run clean-build && tsc --sourceMap false",
     "build:watch": "tsc -w",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "release": "npm run build:prod && changeset publish"
+    "release": "npm run build:prod && changeset publish",
+    "version": "changeset version && npm install"
   },
   "author": "Brett Goulder <brett@meroxa.io>",
   "contributors": [
