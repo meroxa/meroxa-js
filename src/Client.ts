@@ -19,6 +19,7 @@ import {
 } from "./types";
 import { BuildResponse, CreateBuildParams } from "./types/build";
 import { SourceResponse } from "./types/source";
+import url from "url";
 
 export interface ClientOptions {
   auth: string;
@@ -31,7 +32,16 @@ export default class Client {
   #client: AxiosInstance;
 
   constructor(options: ClientOptions) {
-    const baseURL = options.url || "https://api.meroxa.io";
+    const envURL = options.url || "https://api.meroxa.io";
+    let URL;
+    try {
+      URL = new url.URL(envURL);
+    } catch (e) {
+      throw new Error(`Invalid URL (${envURL}) for meroxa-js configuration`);
+    }
+
+    const baseURL = `${URL.protocol}//${URL.host}`;
+
     let headers = {
       Authorization: `Bearer ${options.auth}`,
       ...(options?.accountUUID && {
