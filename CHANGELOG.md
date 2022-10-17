@@ -1,5 +1,11 @@
 # @meroxa/meroxa-js
 
+## 1.7.1
+
+### Patch Changes
+
+- a139e59: fix: allow base urls that contain version path
+
 ## 1.7.0
 
 ### Minor Changes
