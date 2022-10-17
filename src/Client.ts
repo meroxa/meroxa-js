@@ -14,6 +14,8 @@ import {
   UpdatePipelineParams,
   CreateApplicationParams,
   ApplicationResponse,
+  CreateApplicationParamsV2,
+  ApplicationResponseV2,
 } from "./types";
 import { BuildResponse, CreateBuildParams } from "./types/build";
 import { SourceResponse } from "./types/source";
@@ -22,7 +24,6 @@ export interface ClientOptions {
   auth: string;
   timeoutMs?: number;
   url?: string;
-  apiVersion?: string;
   accountUUID?: string;
 }
 
@@ -30,28 +31,40 @@ export default class Client {
   #client: AxiosInstance;
 
   constructor(options: ClientOptions) {
-    const version = options.apiVersion || "v1";
-    const apiURL = options.url || "https://api.meroxa.io";
+    const baseURL = options.url || "https://api.meroxa.io";
     let headers = {
       Authorization: `Bearer ${options.auth}`,
-      ...(options?.accountUUID && {'Meroxa-Account-UUID': options.accountUUID})
+      ...(options?.accountUUID && {
+        "Meroxa-Account-UUID": options.accountUUID,
+      }),
     };
 
     this.#client = axios.create({
-      baseURL: `${apiURL}/${version}`,
+      baseURL,
       timeout: options?.timeoutMs ?? 10_000,
       headers,
     });
   }
 
+  public readonly v2 = {
+    applications: {
+      create: async (
+        params: CreateApplicationParamsV2
+      ): Promise<ApplicationResponseV2> => {
+        let response = await this.#client.post(`/v2/applications`, params);
+        return response.data;
+      },
+    },
+  };
+
   public readonly builds = {
     create: async (params: CreateBuildParams): Promise<BuildResponse> => {
-      let response = await this.#client.post("/builds", params);
+      let response = await this.#client.post("/v1/builds", params);
       return response.data;
     },
 
     get: async (uuid: string): Promise<BuildResponse> => {
-      let response = await this.#client.get(`/builds/${uuid}`);
+      let response = await this.#client.get(`/v1/builds/${uuid}`);
       return response.data;
     },
   };
@@ -68,7 +81,7 @@ export default class Client {
     create: async (
       params: CreateApplicationParams
     ): Promise<ApplicationResponse> => {
-      let response = await this.#client.post(`/applications`, params);
+      let response = await this.#client.post(`/v1/applications`, params);
       return response.data;
     },
   };
@@ -79,7 +92,7 @@ export default class Client {
      * @param nameOrID
      */
     get: async (nameOrID: string): Promise<ConnectorResponse> => {
-      let response = await this.#client.get(`/connectors/${nameOrID}`);
+      let response = await this.#client.get(`/v1/connectors/${nameOrID}`);
       return response.data;
     },
 
@@ -87,7 +100,7 @@ export default class Client {
      * Returns a list of all connectors.
      */
     list: async (): Promise<ConnectorResponse[]> => {
-      let response = await this.#client.get(`/connectors`);
+      let response = await this.#client.get(`/v1/connectors`);
       return response.data;
     },
 
@@ -96,7 +109,7 @@ export default class Client {
      * @param {string} nameOrID - The name or ID of the connector to delete.
      */
     delete: async (nameOrID: string): Promise<void> => {
-      await this.#client.delete(`/connectors/${nameOrID}`);
+      await this.#client.delete(`/v1/connectors/${nameOrID}`);
     },
 
     listByPipeline: async (
@@ -120,7 +133,7 @@ export default class Client {
     create: async (
       params: CreateConnectorParams
     ): Promise<ConnectorResponse> => {
-      let response = await this.#client.post(`/connectors`, params);
+      let response = await this.#client.post(`/v1/connectors`, params);
       return response.data;
     },
 
@@ -133,7 +146,10 @@ export default class Client {
       nameOrID: string,
       params: UpdateConnectorParams
     ): Promise<ConnectorResponse> => {
-      let response = await this.#client.put(`/connectors/${nameOrID}`, params);
+      let response = await this.#client.put(
+        `/v1/connectors/${nameOrID}`,
+        params
+      );
       return response.data;
     },
   };
@@ -144,7 +160,7 @@ export default class Client {
      * @param {string} nameOrID - The name or ID of the function.
      */
     get: async (nameOrID: string): Promise<FunctionResponse> => {
-      let response = await this.#client.get(`/functions/${nameOrID}`);
+      let response = await this.#client.get(`/v1/functions/${nameOrID}`);
       return response.data;
     },
 
@@ -152,7 +168,7 @@ export default class Client {
      * Returns a list of all functions.
      */
     list: async (): Promise<FunctionResponse[]> => {
-      let response = await this.#client.get(`/functions`);
+      let response = await this.#client.get(`/v1/functions`);
       return response.data;
     },
 
@@ -161,7 +177,7 @@ export default class Client {
      * @param nameOrID - The name or ID of the function.
      */
     delete: async (nameOrID: string): Promise<void> => {
-      await this.#client.delete(`/functions/${nameOrID}`);
+      await this.#client.delete(`/v1/functions/${nameOrID}`);
     },
 
     /**
@@ -175,7 +191,7 @@ export default class Client {
      * @param {string} params.pipeline - The pipeline identifier for the function to run inside.
      */
     create: async (params: CreateFunctionParams): Promise<FunctionResponse> => {
-      let response = await this.#client.post(`/functions`, params);
+      let response = await this.#client.post(`/v1/functions`, params);
       return response.data;
     },
 
@@ -192,7 +208,10 @@ export default class Client {
       nameOrID: string,
       params: CreateFunctionParams
     ): Promise<FunctionResponse> => {
-      let response = await this.#client.put(`/functions/${nameOrID}`, params);
+      let response = await this.#client.put(
+        `/v1/functions/${nameOrID}`,
+        params
+      );
       return response.data;
     },
   };
@@ -203,7 +222,7 @@ export default class Client {
      * @param nameOrID
      */
     get: async (nameOrID: string): Promise<PipelineResponse> => {
-      let response = await this.#client.get(`/pipelines/${nameOrID}`);
+      let response = await this.#client.get(`/v1/pipelines/${nameOrID}`);
       return response.data;
     },
 
@@ -211,7 +230,7 @@ export default class Client {
      * Returns a list of all pipelines.
      */
     list: async (): Promise<PipelineResponse[]> => {
-      let response = await this.#client.get("/pipelines");
+      let response = await this.#client.get("/v1/pipelines");
       return response.data;
     },
 
@@ -220,7 +239,7 @@ export default class Client {
      * @param {string} nameOrID - The name or ID of the pipeline.
      */
     delete: async (nameOrID: string): Promise<void> => {
-      await this.#client.delete(`/pipelines/${nameOrID}`);
+      await this.#client.delete(`/v1/pipelines/${nameOrID}`);
     },
 
     /**
@@ -228,7 +247,7 @@ export default class Client {
      * @param {Object} params - The parameters of the pipeline.
      */
     create: async (params: CreatePipelineParams): Promise<PipelineResponse> => {
-      let response = await this.#client.post("/pipelines", params);
+      let response = await this.#client.post("/v1/pipelines", params);
       return response.data;
     },
 
@@ -241,7 +260,10 @@ export default class Client {
       nameOrID: string,
       params: UpdatePipelineParams
     ): Promise<PipelineResponse> => {
-      let response = await this.#client.put(`/pipelines/${nameOrID}`, params);
+      let response = await this.#client.put(
+        `/v1/pipelines/${nameOrID}`,
+        params
+      );
       return response.data;
     },
   };
@@ -252,7 +274,7 @@ export default class Client {
      * @param {string} nameOrID - The name or ID of the resource.
      */
     get: async (nameOrID: string): Promise<ResourceResponse> => {
-      let response = await this.#client.get(`/resources/${nameOrID}`);
+      let response = await this.#client.get(`/v1/resources/${nameOrID}`);
       return response.data;
     },
 
@@ -260,7 +282,7 @@ export default class Client {
      * Returns a list of all resources.
      */
     list: async (): Promise<ResourceResponse[]> => {
-      let response = await this.#client.get("/resources");
+      let response = await this.#client.get("/v1/resources");
       return response.data;
     },
 
@@ -269,7 +291,7 @@ export default class Client {
      * @param {string} nameOrID - The name or ID of the resource.
      */
     delete: async (nameOrID: string): Promise<void> => {
-      await this.#client.delete(`/resources/${nameOrID}`);
+      await this.#client.delete(`/v1/resources/${nameOrID}`);
     },
 
     /**
@@ -291,7 +313,7 @@ export default class Client {
       // type: ResourceType;
       // url: string;
       // ssh_tunnel: ResourceSSHTunnel;
-      let response = await this.#client.post("/resources", params);
+      let response = await this.#client.post("/v1/resources", params);
       return response.data;
     },
 
@@ -308,7 +330,7 @@ export default class Client {
      */
     update: async (params: UpdateResourceParams): Promise<ResourceResponse> => {
       let response = await this.#client.put(
-        `/resources/${params.name}`,
+        `/v1/resources/${params.name}`,
         params
       );
       return response.data;
@@ -317,7 +339,7 @@ export default class Client {
 
   public readonly sources = {
     create: async (): Promise<SourceResponse> => {
-      let response = await this.#client.post("/sources");
+      let response = await this.#client.post("/v1/sources");
       return response.data;
     },
   };
@@ -327,7 +349,7 @@ export default class Client {
      * Returns your user profile.
      */
     me: async (): Promise<UserResponse> => {
-      let response = await this.#client.get("/users/me");
+      let response = await this.#client.get("/v1/users/me");
       return response.data;
     },
   };
