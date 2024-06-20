@@ -1,5 +1,12 @@
 # @meroxa/meroxa-js
 
+## 1.7.2
+
+### Patch Changes
+
+- 41ce37d: build(deps): upgrade devDeps to latest
+- cf273c2: ci(release): ensure package-lock is regenerated
+
 ## 1.7.1
 
 ### Patch Changes
